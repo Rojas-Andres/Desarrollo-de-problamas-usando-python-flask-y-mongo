@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 from flask_mysqldb import MySQL
 #Esta seria la clase que vamos a configurar
 app = Flask(__name__)
@@ -11,7 +11,7 @@ mysql = MySQL(app)
 #Decorador cada vez que un usuario entre a la ruta principal le responda algo
 @app.route('/')
 def Index():
-    return 'Bienvenido'
+    return render_template('index.html')
 @app.route('/add_contact')
 def add_contact():
     return 'Añadir contacto'
