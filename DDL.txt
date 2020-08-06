@@ -1,0 +1,8 @@
+--Creacion de la tabla clientes
+create table clientes( cedula varchar(255) primary key not null,
+nombre varchar(30) not null , 
+direccion varchar(40) not null,
+telefono varchar(10) not null,
+foto varchar(12) not null )
+
+-- Creacion de la tabla 
