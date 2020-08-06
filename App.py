@@ -1,11 +1,20 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,url_for,flash
 from flask_mysqldb import MySQL
+
 #Esta seria la clase que vamos a configurar
+
 app = Flask(__name__)
+#Conexion a mysql
 app.config['MYSQL_HOST']='127.0.0.1'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='flask_contact'
+
+#Configuraciones
+#Inicializamos una sesion al server , lo guardamos dentro de la memoria de la app
+app.secret_key="mysecretkey"
+
+
 #Conexion a la base de datos
 mysql = MySQL(app)
 #Decorador cada vez que un usuario entre a la ruta principal le responda algo
@@ -28,8 +37,11 @@ def add_contact():
         cur.execute("INSERT INTO clientes (nombre,cedula,direccion,telefono,foto) values (%s,%s,%s,%s,%s)", (nombre,cedula,direccion,telefono,foto))
         #cur.execute("Select * from contacts")
         mysql.connection.commit()
-        
-        return "Recibido"
+        #Flash permite enviar mensajes entre vistas
+        flash("Contacto agregado satisfactoriamente")
+        #Redireccionamos a la principal
+             
+        return redirect(url_for('Index'))
 @app.route('/edit_contact')
 def edit_contact():
     return 'Editar contacto'

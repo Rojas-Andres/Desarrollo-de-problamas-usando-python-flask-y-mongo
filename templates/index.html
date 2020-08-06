@@ -1,3 +1,11 @@
+{# Recorremos cada mensaje si hay  #}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
 <form action="/add_contact" method="POST">
     <input type="text" name="Nombre" placeholder="Nombre">
     <input type="text" name="Cedula" placeholder="Cedula">
