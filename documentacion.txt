@@ -1,3 +1,6 @@
 Para este proyecto se debe de instalar:
 	- pip install flask flask-mysqldb
-	
+
+Se debe de tener instalado xampp y configurado con el puerto 8080
+Para mysql
+http://localhost:8080/phpmyadmin/
