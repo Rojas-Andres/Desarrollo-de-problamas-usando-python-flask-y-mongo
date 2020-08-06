@@ -1,0 +1,3 @@
+Para este proyecto se debe de instalar:
+	- pip install flask flask-mysqldb
+	
