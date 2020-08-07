@@ -169,26 +169,71 @@ def facturas():
 def add_facturas():
     if request.method == 'POST':
         #Nos referimos al name del formulario del index
-        codigo = request.form["Codigo"]
+        codigo = request.form["Codigo Factura"]
         cedula = request.form["Cedula"]
-        producto = request.form["Producto"]
-        cantidad = request.form["Cantidad"]
+        productos = request.form["Productos"].split(',')
+        cantidad = request.form["Cantidad"].split(',')
         fecha = request.form["Fecha"]
         metodo = request.form["Metodo"]
-        #Establecemos un cursor para la conexion a la bd
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO FACTURAS (codigo_factura  ,cedula_cliente ,producto  ,cantidad_prod ,fecha_compra ,metodo_pago ) values (%s,%s,%s,%s,%s,%s)", (codigo,cedula,producto,cantidad,fecha,metodo))
-        mysql.connection.commit()
-        flash("Producto ha sido agregado satisfactoriamente")
-        #Redireccionamos a la principal
+        print(productos)
+        print(cantidad)
+        #Valido que los productos digitados sea igual a la cantidad de productos 
+        if len(cantidad)==len(productos):
+            #Establecemos un cursor para la conexion a la bd
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO FACTURAS (codigo_factura,cedula_cliente ,fecha_compra, metodo_pago ) values (%s,%s,%s,%s)", (codigo,cedula,fecha,metodo))
+            for i in range(len(cantidad)):
+                cur.execute(" INSERT INTO FACTURA_PRODUCTO (codigo_factura,producto,cantidad_producto) values(%s,%s,%s)",(codigo,productos[i],cantidad[i]))
+            #cur.execute("INSERT INTO FACTURAS (codigo_factura  ,cedula_cliente ,producto  ,cantidad_prod ,fecha_compra ,metodo_pago ) values (%s,%s,%s,%s,%s,%s)", (codigo,cedula,producto,cantidad,fecha,metodo))
+            mysql.connection.commit()
+            flash("La factura ha sido agregada satisfactoriamente")
+            #Redireccionamos a la principal
+        else:
+            flash("No se ha ingresado la factura porque la cantidad de productos es diferente a los productos")
         return redirect(url_for('facturas'))
 
 @app.route('/edit_facturas/<int:factura>')
 def get_facturas(factura):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM FACTURAS WHERE codigo_factura = {0} ".format(factura))
+    #Hacemos esto para sacar los productos
+    cur.execute(""" SELECT b.producto FROM FACTURAS a ,FACTURA_PRODUCTO b WHERE 
+    a.codigo_factura=b.codigo_factura and a.codigo_factura = {0} order by a.codigo_factura
+    """.format(factura))
+    dato_productos = cur.fetchall()
+    print(dato_productos[0][0])
+    productos=""
+    for i in dato_productos:
+        for j in i:
+            productos+="{},".format(j)
+            #productos=''.join(j)
+    #Eliminamos el ultimo caracter de la cadena
+    productos=productos[:len(productos)-1]
+    
+    #Sacamos la cantidad de los productos
+    cur.execute(""" SELECT b.cantidad_producto FROM FACTURAS a ,FACTURA_PRODUCTO b WHERE 
+    a.codigo_factura=b.codigo_factura and a.codigo_factura = {0} order by a.codigo_factura
+    """.format(factura))
+    dato_cantidad_producto = cur.fetchall()
+    #print(dato_productos[0][0])
+    cantidad_producto=""
+    for i in dato_cantidad_producto:
+        for j in i:
+            cantidad_producto+="{},".format(j)
+            #productos=''.join(j)
+    #Eliminamos el ultimo caracter de la cadena
+    cantidad_producto=cantidad_producto[:len(cantidad_producto)-1]
+    print("Cantidad productso",cantidad_producto)
+    
+    #Sacamos el resto de los campos
+    cur.execute("""SELECT a.codigo_factura,a.cedula_cliente,a.fecha_compra,a.metodo_pago,       b.cantidad_producto
+     FROM FACTURAS a ,FACTURA_PRODUCTO b 
+    WHERE a.codigo_factura=b.codigo_factura and a.codigo_factura = {0} """.format(factura,productos))
     dato = cur.fetchall()
-    return render_template('editar_factura.html',factura = dato[0] )
+    print(dato[0])
+
+    return render_template('editar_factura.html',factura = dato[0] , productos = productos ,cantidad = cantidad_producto)
+
+
 
 @app.route('/actualizar_facturas/<int:factura>',methods=['POST'])
 def actualizar_facturas(factura):
@@ -196,15 +241,35 @@ def actualizar_facturas(factura):
     codigo = request.form["Codigo"]
     cedula = request.form["Cedula"]
     producto = request.form["Producto"]
+    #Dividimos los productos para hacer el update
+    producto=producto.split(',')
+    #print(producto)
+    #Dividimos la cantidad
     cantidad = request.form["Cantidad"]
+    cantidad=cantidad.split(',')
+    #print(cantidad)
     fecha = request.form["Fecha"]
     metodo = request.form["Metodo"]
+    #No se hace update los borramos y lo volvemos a llenar con los nuevos valores 
+    cur.execute(""" DELETE FROM FACTURA_PRODUCTO where codigo_factura ={0} """.format(factura))
+    cur.execute(""" DELETE FROM FACTURAS where codigo_factura = {0} """.format(factura))
+    cur.execute(""" INSERT INTO FACTURAS (codigo_factura,cedula_cliente,fecha_compra,metodo_pago) 
+    values (%s,%s,%s,%s)
+    """,(codigo,cedula,fecha,metodo))
+    for i in range(len(cantidad)):
+        cur.execute(""" INSERT INTO FACTURA_PRODUCTO (codigo_factura,producto,cantidad_producto)
+        values (%s,%s,%s)
+        """,(codigo,producto[i],cantidad[i]))
+    mysql.connection.commit()
+    flash("La factura fue actualizado satisfactoriamente")
+    '''
     cur.execute("""
     UPDATE FACTURAS SET codigo_factura = %s ,cedula_cliente =%s,producto =%s,cantidad_prod =%s,fecha_compra=%s ,metodo_pago=%s
     where codigo_factura=%s
      """,(codigo,cedula,producto,cantidad,fecha,metodo,factura))
     mysql.connection.commit()
     flash("La factura fue actualizado satisfactoriamente")
+    '''
     return redirect(url_for('facturas')) 
 
 #Le envio la factura 

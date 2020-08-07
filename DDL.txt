@@ -24,13 +24,24 @@ codigo_producto numeric(12) primary key not null
 insert into productos (codigo_producto ,categoria,nombre ,precio,cantidad_bodega,estado) values (1,'A','Paracetamol',1200,12,'ACTIVO')
 
 --- Creacion de la tabla facturas
-
-create table facturas ( codigo_factura numeric(12) primary key not null, 
-cedula_cliente numeric(12),
-producto numeric(12) not null,
-cantidad_prod numeric(12) not null,
-fecha_compra varchar(12) not null,
-metodo_pago varchar(12) not null,
-constraint fk_cedula_cliente FOREIGN KEY (cedula_cliente) REFERENCES clientes(cedula),
-constraint fk_producto  FOREIGN KEY (producto) REFERENCES productos (codigo_producto)
+create table facturas(
+codigo_factura numeric(12) primary key not null,
+cedula_cliente numeric(12) not null,
+fecha_compra varchar(20) not null,
+metodo_pago varchar(20) not null,
+CONSTRAINT FK_clientes FOREIGN KEY (cedula_cliente) REFERENCES clientes(cedula)
 )
+
+--Creacion de relacion entre factura y productos
+
+create table factura_producto(
+codigo_factura numeric(12) not null,
+producto numeric(12) not null,
+cantidad_producto numeric(12) not null,
+CONSTRAINT FK_codigo_factura  FOREIGN KEY (codigo_factura) REFERENCES facturas(codigo_factura),
+CONSTRAINT FK_producto  FOREIGN KEY (producto) REFERENCES productos(codigo_producto)
+)
+
+
+
+

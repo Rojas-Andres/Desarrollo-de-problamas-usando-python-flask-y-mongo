@@ -24,7 +24,7 @@
         <div class="card card-body">
             <form action="/add_facturas" method="POST">
                 <div class="form-group">
-                <input type="text" name="Codigo" placeholder="Codigo" class = "form-control">
+                <input type="text" name="Codigo " placeholder="Codigo" class = "form-control">
                 </div>
                 
                 <div class="form-group">
@@ -32,7 +32,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <input type="text" name="Producto" placeholder="Producto" class = "form-control">
+                    <input type="text" name="Productos" placeholder="Productos" class = "form-control">
                 </div>
                 
                 <div class="form-group">
@@ -59,13 +59,14 @@
         <table class="table table-striped table-bordered bg-white table-sm">
             <thead>
                 <tr>
-                    <td>Codigo</td>
-                    <td>Cedula</td>
-                    <td>Producto</td>
-                    <td>Cantidad</td>
-                    <td>Fecha</td>
+                    <td>Codigo Factura</td>
+                    <td>Cedula cliente</td>
+                    <td>fecha compra</td>
+                    <td>metodo pago </td>
+                    <td>Operaciones </td>
+                   <!--  <td>Fecha</td>
                     <td>Metodo</td>
-                    <td>Operaciones</td>
+                    <td>Operaciones</td> -->
                 </tr>
             </thead>
             <tbody>
@@ -76,8 +77,8 @@
                         <td>{{ factura.1 }}</td>
                         <td>{{ factura.2 }}</td>
                         <td>{{ factura.3 }}</td>
-                        <td>{{ factura.4 }}</td>
-                        <td>{{ factura.5 }}</td>
+                        <!--<td>{{ factura.4 }}</td>
+                        <td>{{ factura.5 }}</td>-->
                         <td>
                             {# Le pasamos el producto #}
                             <a href="/edit_facturas/{{factura.0}}" class="btn btn-secondary">Editar</a>
