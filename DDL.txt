@@ -1,8 +1,17 @@
 --Creacion de la tabla clientes
-create table clientes( cedula varchar(255) primary key not null,
+create table clientes( cedula numeric(12) primary key not null,
 nombre varchar(30) not null , 
 direccion varchar(40) not null,
 telefono varchar(10) not null,
 foto varchar(12) not null )
 
--- Creacion de la tabla 
+--Insert de prueba
+--insert into clientes (nombre,cedula,direccion,telefono,foto) values ('Alfredo',1012031,'Cra 121 A','19291','S'), ('Vanessa',123,'Cra 09 A','2818','S'), ('Nelson',5555,'Cra 551 A','112312','N'), ('Mauricio',7777,'Cra 121 A','918212','S')
+
+-- Creacion de la tabla producto
+
+create table productos(codigo_producto numeric(12) primary key not null ,categoria varchar(30),nombre varchar(30), precio numeric(12),cantidad_bodega numeric(12) , estado varchar(15), CHECK (estado in ('INACTIVO' | 'ACTIVO')))
+
+--Insert de prueba
+
+insert into productos (codigo_producto ,categoria,nombre ,precio,cantidad_bodega,estado) values (1,'A','Paracetamol',1200,12,'ACTIVO')

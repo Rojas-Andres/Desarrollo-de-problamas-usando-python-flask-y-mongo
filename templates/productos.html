@@ -1,0 +1,76 @@
+{% extends 'layaut.html' %}
+
+{% block body %}
+<div class="row">
+    <!--En la columna de 5 estara el formulario-->
+    <div class="col-md-5">
+        <div class="card card-body">
+            <form action="/add_productos" method="POST">
+                <input type="text" name="Codigo" placeholder="Codigo">
+                <input type="text" name="Categoria" placeholder="Categoria">
+                <input type="text" name="Nombre" placeholder="Nombre">
+                <input type="text" name="Precio" placeholder="Precio">
+                <input type="text" name="Cantidad" placeholder="Cantidad">
+                <input type="text" name="Estado" placeholder="Estado">
+                <button type ="submit"> Guardar </button>
+            </form>
+        </div>
+    </div>
+    <!--En la columna de 7 estaran los registros de los clientes-->
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Codigo</td>
+                    <td>Categoria</td>
+                    <td>Nombre</td>
+                    <td>Precio</td>
+                    <td>Cantidad</td>
+                    <td>Estado</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                    {# tr es igual a fila y td es cada columna #}
+                    <tr>
+                        <!-- Con este if validamos que solo muestre los que estan activos -->
+                        {% if producto.5 == 'ACTIVO' %}
+                            <td>{{ producto.0 }}</td>
+                            <td>{{ producto.1 }}</td>
+                            <td>{{ producto.2 }}</td>
+                            <td>{{ producto.3 }}</td>
+                            <td>{{ producto.4 }}</td>
+                            <td>{{ producto.5 }}</td>
+                            <td>
+                                {# Le pasamos el producto #}
+                                <a href="/edit_producto/{{producto.0}}">Editar</a>
+                                <a href="/delete_producto/{{producto.0}}">Borrar</a>
+                            </td>
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{# Recorremos cada mensaje si hay  #}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <p>{{ message }}</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
+{% endblock %}
