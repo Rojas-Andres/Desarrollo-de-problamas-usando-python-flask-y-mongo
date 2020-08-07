@@ -23,13 +23,34 @@
 
         <div class="card card-body">
             <form action="/add_facturas" method="POST">
-                <input type="text" name="Codigo" placeholder="Codigo">
-                <input type="text" name="Cedula" placeholder="Cedula">
-                <input type="text" name="Producto" placeholder="Producto">
-                <input type="text" name="Cantidad" placeholder="Cantidad">
-                <input type="text" name="Fecha" placeholder="Fecha">
-                <input type="text" name="Metodo" placeholder="Metodo">
-                <button type ="submit"> Guardar </button>
+                <div class="form-group">
+                <input type="text" name="Codigo" placeholder="Codigo" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Cedula" placeholder="Cedula" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Producto" placeholder="Producto" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Cantidad" placeholder="Cantidad" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Fecha" placeholder="Fecha" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Metodo" placeholder="Metodo" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <button type ="submit" class = "btn btn-primary btn-block"> Guardar </button>
+                </div>
+                
             </form>
         </div>
     </div>

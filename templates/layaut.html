@@ -7,8 +7,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
-    <!-- En contenido que va aqui puede ser el de editar_contacto o index -->
-    <div class="container">    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Flask App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" href="/">Inicio <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/contactos">Clientes</a>
+            <a class="nav-link" href="/productos">Productos</a>
+            <a class="nav-link" href="/facturas">Facturas</a>
+            <a class="nav-link" href="/reporte">Reporte</a>
+          </div>
+        </div>
+    </nav>
+    <!-- En contenido que va aqui puede ser el de editar_contacto o index , pt-4 = padding-top = 4 -->
+    <div class="container pt-4">    
         {% block body %}
         {% endblock %}
     </div>

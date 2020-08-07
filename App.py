@@ -136,9 +136,16 @@ def actualizar_producto(producto):
     mysql.connection.commit()
     flash("El producto fue actualizado satisfactoriamente")
     return redirect(url_for('productos')) 
-
+#Inactivar producto /inactivar
 #Le envio el producto 
-@app.route('/delete_producto/<int:producto>')
+@app.route('/inactivar/<int:producto>')
+def inactivar(producto):
+    cur = mysql.connection.cursor()
+    cur.execute("update PRODUCTOS set estado = %s WHERE codigo_producto =%s ",('INACTIVAR',producto))
+    mysql.connection.commit()
+    flash("Producto ha sido inhabilitado satisfactoriamente")
+    return redirect(url_for('productos'))
+@app.route('/delete_producto/<int:factura>')
 def delete_producto(producto):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM PRODUCTOS WHERE codigo_producto = {0} ".format(producto))
