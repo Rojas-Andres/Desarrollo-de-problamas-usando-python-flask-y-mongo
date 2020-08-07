@@ -6,7 +6,7 @@
 {% endfor %}
 {% endif %}
 {% endwith %}
-<form action="/add_contact" method="POST">
+<form action="/add_cliente" method="POST">
     <input type="text" name="Nombre" placeholder="Nombre">
     <input type="text" name="Cedula" placeholder="Cedula">
     <input type="text" name="Direccion" placeholder="Direccion">
@@ -37,7 +37,7 @@
                 <td>{{ clien.4 }}</td>
                 <td>
                     {# Le pasamos la cedula #}
-                    <a href="/edit_contac/{{clien.0}}t">Editar</a>
+                    <a href="/edit_contact/{{clien.0}}">Editar</a>
                     <a href="/delete/{{clien.0}}">Borrar</a>
                 </td>
             </tr>

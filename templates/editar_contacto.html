@@ -1,0 +1,9 @@
+{# El metodo post es para enviarle los datos y luego llamarlo con el metodo request #}
+<form action="/actualizar/{{ cliente.0 }}" method="POST">
+    <input type="text" name="Cedula" placeholder="Cedula" value="{{ cliente.0 }}">
+    <input type="text" name="Nombre" placeholder="Nombre" value="{{ cliente.1 }}">
+    <input type="text" name="Direccion" placeholder="Direccion" value="{{ cliente.2 }}">
+    <input type="text" name="Telefono" placeholder="Telefono" value="{{ cliente.3 }}">
+    <input type="text" name="Foto" placeholder="Foto"  value="{{ cliente.4 }}">
+    <button type ="submit"> Guardar </button>
+</form>

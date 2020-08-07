@@ -26,8 +26,9 @@ def Index():
     data = cur.fetchall()
     #Le envio los clientes al index para que los muestre 
     return render_template('index.html',clientes = data )
-@app.route('/add_contact',methods=['POST'])
-def add_contact():
+
+@app.route('/add_cliente',methods=['POST'])
+def add_cliente():
     if request.method == 'POST':
         #Nos referimos al name del formulario del index
         nombre = request.form["Nombre"]
@@ -45,12 +46,33 @@ def add_contact():
         flash("Contacto agregado satisfactoriamente")
         #Redireccionamos a la principal
         return redirect(url_for('Index'))
-@app.route('/edit_contact')
-def edit_contact():
-    return 'Editar contacto'
+
+@app.route('/edit_contact/<int:cedula>')
+def get_cliente(cedula):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM CLIENTES WHERE cedula = {0} ".format(cedula))
+    dato = cur.fetchall()
+    return render_template('editar_contacto.html',cliente = dato[0] )
+
+@app.route('/actualizar/<int:cedula>',methods=['POST'])
+def actualizar(cedula):
+    cur = mysql.connection.cursor()
+    nombre = request.form["Nombre"]
+    cedula_cli = request.form["Cedula"]
+    direccion = request.form["Direccion"]
+    telefono = request.form["Telefono"]
+    foto = request.form["Foto"]
+    cur.execute("""
+    UPDATE CLIENTES SET CEDULA = %s ,nombre =%s,direccion =%s,telefono =%s,foto=%s 
+    where cedula=%s
+     """,(cedula_cli,nombre,direccion,telefono,foto,cedula))
+    mysql.connection.commit()
+    flash("El contacto fue actualizado satisfactoriamente")
+    return redirect(url_for('Index')) 
+
 #Le envio la cedula 
 @app.route('/delete/<int:cedula>')
-def delete_contact(cedula):
+def delete_cliente(cedula):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM CLIENTES WHERE cedula = {0} ".format(cedula))
     mysql.connection.commit()
