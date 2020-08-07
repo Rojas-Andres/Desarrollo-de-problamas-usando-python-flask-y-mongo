@@ -1,3 +1,7 @@
+<!--Hereda la interfaz de layaut-->
+{% extends 'layaut.html' %}
+
+{% block body %}
 {# El metodo post es para enviarle los datos y luego llamarlo con el metodo request #}
 <form action="/actualizar/{{ cliente.0 }}" method="POST">
     <input type="text" name="Cedula" placeholder="Cedula" value="{{ cliente.0 }}">
@@ -7,3 +11,5 @@
     <input type="text" name="Foto" placeholder="Foto"  value="{{ cliente.4 }}">
     <button type ="submit"> Guardar </button>
 </form>
+
+{% endblock %}
