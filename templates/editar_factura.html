@@ -4,13 +4,38 @@
 {% block body %}
 {# El metodo post es para enviarle los datos y luego llamarlo con el metodo request #}
 <form action="/actualizar_facturas/{{ factura.0 }}" method="POST">
+    <div class="col-md-6 offset-md-4">
+        <div class="card card-body">
+            <div class="form-group">
+                <input type="text" name="Codigo" placeholder="Codigo" value="{{ factura.0 }}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" name="Cedula" placeholder="Cedula" value="{{ factura.1 }}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" name="Producto" placeholder="Producto" value="{{ factura.2 }}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" name="Cantidad" placeholder="Cantidad" value="{{ factura.3 }}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" name="Fecha" placeholder="Fecha" value="{{ factura.4 }}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" name="Metodo" placeholder="Metodo" value="{{ factura.5 }}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <button type ="submit" class = "btn btn-primary btn-block"> Guardar </button>
+            </div>
+            
+        </div>
+    </div>
 
-    <input type="text" name="Codigo" placeholder="Codigo" value="{{ factura.0 }}">
-    <input type="text" name="Cedula" placeholder="Cedula" value="{{ factura.1 }}">
-    <input type="text" name="Producto" placeholder="Producto" value="{{ factura.2 }}">
-    <input type="text" name="Cantidad" placeholder="Cantidad" value="{{ factura.3 }}">
-    <input type="text" name="Fecha" placeholder="Fecha" value="{{ factura.4 }}">
-    <input type="text" name="Metodo" placeholder="Metodo" value="{{ factura.5 }}">
-    <button type ="submit"> Guardar </button>
 </form>
 {% endblock %}
