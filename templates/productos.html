@@ -4,6 +4,23 @@
 <div class="row">
     <!--En la columna de 5 estara el formulario-->
     <div class="col-md-5">
+                
+        {# Recorremos cada mensaje si hay  #}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
         <div class="card card-body">
             <form action="/add_productos" method="POST">
                 <input type="text" name="Codigo" placeholder="Codigo">
@@ -27,6 +44,7 @@
                     <td>Precio</td>
                     <td>Cantidad</td>
                     <td>Estado</td>
+                    <td>Operaciones</td>
                 </tr>
             </thead>
             <tbody>
@@ -43,8 +61,8 @@
                             <td>{{ producto.5 }}</td>
                             <td>
                                 {# Le pasamos el producto #}
-                                <a href="/edit_producto/{{producto.0}}">Editar</a>
-                                <a href="/delete_producto/{{producto.0}}">Borrar</a>
+                                <a href="/edit_producto/{{producto.0}}" class="btn btn-secondary">Editar</a>
+                                <a href="/delete_producto/{{producto.0}}" class="btn btn-danger">Borrar</a>
                             </td>
                         {% endif %}
 
@@ -57,22 +75,6 @@
         <a href="/">Regresar</a>
     </div>
 </div>
-
-{# Recorremos cada mensaje si hay  #}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <p>{{ message }}</p>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 
 
 {% endblock %}

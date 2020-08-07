@@ -3,14 +3,50 @@
 {% block body %}
 <div class="row">
     <!--En la columna de 5 estara el formulario-->
+    
+
     <div class="col-md-5">
+        {# Recorremos cada mensaje si hay  #}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+    
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    
+    
         <div class="card card-body">
             <form action="/add_cliente" method="POST">
-                <input type="text" name="Nombre" placeholder="Nombre">
-                <input type="text" name="Cedula" placeholder="Cedula">
-                <input type="text" name="Direccion" placeholder="Direccion">
-                <input type="text" name="Telefono" placeholder="Telefono">
-                <input type="text" name="Foto" placeholder="Foto">
+                <div class="form-group">
+                    <input type="text" name="Nombre" placeholder="Nombre" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Cedula" placeholder="Cedula" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Direccion" placeholder="Direccion" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Telefono" placeholder="Telefono" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="Foto" placeholder="Foto" class = "form-control">
+                </div>
+                
+                <div class="form-group">
+                    
+                </div>
                 <button type ="submit"> Guardar </button>
             </form>
         </div>
@@ -39,8 +75,8 @@
                         <td>{{ clien.4 }}</td>
                         <td>
                             {# Le pasamos la cedula #}
-                            <a href="/edit_contact/{{clien.0}}">Editar</a>
-                            <a href="/delete/{{clien.0}}">Borrar</a>
+                            <a href="/edit_contact/{{clien.0}}" class="btn btn-secondary">Editar</a>
+                            <a href="/delete/{{clien.0}}" class="btn btn-danger">Borrar</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -51,22 +87,6 @@
         <a href="/">Regresar</a>
     </div>
 </div>
-
-{# Recorremos cada mensaje si hay  #}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <p>{{ message }}</p>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 
 
 {% endblock %}
