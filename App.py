@@ -169,7 +169,8 @@ def facturas():
 def add_facturas():
     if request.method == 'POST':
         #Nos referimos al name del formulario del index
-        codigo = request.form["Codigo Factura"]
+        codigo = request.form["Codigo"]
+        print(codigo)
         cedula = request.form["Cedula"]
         productos = request.form["Productos"].split(',')
         cantidad = request.form["Cantidad"].split(',')
@@ -205,7 +206,6 @@ def get_facturas(factura):
     for i in dato_productos:
         for j in i:
             productos+="{},".format(j)
-            #productos=''.join(j)
     #Eliminamos el ultimo caracter de la cadena
     productos=productos[:len(productos)-1]
     
@@ -213,6 +213,7 @@ def get_facturas(factura):
     cur.execute(""" SELECT b.cantidad_producto FROM FACTURAS a ,FACTURA_PRODUCTO b WHERE 
     a.codigo_factura=b.codigo_factura and a.codigo_factura = {0} order by a.codigo_factura
     """.format(factura))
+    #Guardamos todos los registros para luego recorrerlos uno a uno y enviarlo a editar_factura todo junto 
     dato_cantidad_producto = cur.fetchall()
     #print(dato_productos[0][0])
     cantidad_producto=""
@@ -276,20 +277,21 @@ def actualizar_facturas(factura):
 @app.route('/delete_facturas/<int:factura>')
 def delete_factura(factura):
     cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM FACTURA_PRODUCTO WHERE codigo_factura = {0} ".format(factura))
     cur.execute("DELETE FROM FACTURAS WHERE codigo_factura = {0} ".format(factura))
     mysql.connection.commit()
     flash("La factura borrado satisfactoriamente")
     return redirect(url_for('facturas'))
-
 #Reporte clientes , facturas y producto
 @app.route('/reporte')
 def reporte():
     cur = mysql.connection.cursor()
     cur.execute("""  
-    select a.nombre,b.nombre ,b.precio*c.cantidad_prod,c.metodo_pago from 
-    clientes a ,productos b ,facturas c 
-    where a.cedula=c.cedula_cliente and b.codigo_producto=c.producto 
-    order by 3""")
+    SELECT d.cedula,d.nombre,a.codigo_factura,sum(b.cantidad_producto*c.precio) as valor
+    FROM FACTURAS a, FACTURA_PRODUCTO b ,PRODUCTOS c ,CLIENTES d
+    where a.codigo_factura=b.codigo_factura and b.producto=c.codigo_producto and a.cedula_cliente=d.cedula 
+    group by a.codigo_factura,d.cedula order by valor
+    """)
     data = cur.fetchall()
     return render_template('reporte.html',reportes = data )
 #El debug significa que cada vez que hagamos un cambio se reinicie el server
