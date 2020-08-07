@@ -20,7 +20,12 @@ mysql = MySQL(app)
 #Decorador cada vez que un usuario entre a la ruta principal le responda algo
 @app.route('/')
 def Index():
-    return render_template('index.html')
+    #Realizamos la consulta a la base de datos para enviar los clientes
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM CLIENTES')
+    data = cur.fetchall()
+    #Le envio los clientes al index para que los muestre 
+    return render_template('index.html',clientes = data )
 @app.route('/add_contact',methods=['POST'])
 def add_contact():
     if request.method == 'POST':
@@ -31,7 +36,6 @@ def add_contact():
         telefono = request.form["Telefono"]
         foto = request.form["Foto"]
         #print(nombre)
-        
         #Establecemos un cursor para la conexion a la bd
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO clientes (nombre,cedula,direccion,telefono,foto) values (%s,%s,%s,%s,%s)", (nombre,cedula,direccion,telefono,foto))
@@ -40,15 +44,18 @@ def add_contact():
         #Flash permite enviar mensajes entre vistas
         flash("Contacto agregado satisfactoriamente")
         #Redireccionamos a la principal
-             
         return redirect(url_for('Index'))
 @app.route('/edit_contact')
 def edit_contact():
     return 'Editar contacto'
-@app.route('/delete')
-def delete_contact():
-    return 'Borrar contacto'
-
+#Le envio la cedula 
+@app.route('/delete/<int:cedula>')
+def delete_contact(cedula):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM CLIENTES WHERE cedula = {0} ".format(cedula))
+    mysql.connection.commit()
+    flash("Contacto borrado satisfactoriamente")
+    return redirect(url_for('Index'))
 #El debug significa que cada vez que hagamos un cambio se reinicie el server
 if __name__== '__main__': 
     app.run(port = 3000 ,debug = True)

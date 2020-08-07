@@ -14,3 +14,33 @@
     <input type="text" name="Foto" placeholder="Foto">
     <button type ="submit"> Guardar </button>
 </form>
+{# Mostrando los clientes #}
+<table>
+    <thead>
+        <tr>
+            <td>Cedula</td>
+            <td>Nombre</td>
+            <td>Direccion</td>
+            <td>Telefono</td>
+            <td>Foto</td>
+            <td>Operaciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for clien in clientes %}
+            {# tr es igual a fila y td es cada columna #}
+            <tr>
+                <td>{{ clien.0 }}</td>
+                <td>{{ clien.1 }}</td>
+                <td>{{ clien.2 }}</td>
+                <td>{{ clien.3 }}</td>
+                <td>{{ clien.4 }}</td>
+                <td>
+                    {# Le pasamos la cedula #}
+                    <a href="/edit_contac/{{clien.0}}t">Editar</a>
+                    <a href="/delete/{{clien.0}}">Borrar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
