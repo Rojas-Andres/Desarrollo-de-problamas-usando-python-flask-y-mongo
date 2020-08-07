@@ -1,0 +1,52 @@
+{% extends 'layaut.html' %}
+
+{% block body %}
+<div class="row">
+    <!--En la columna de 7 estaran los registros de los clientes-->
+    <div class="col-md-5">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Codigo</td>
+                    <td>Cedula</td>
+                    <td>Valor</td>
+                    <td>Cantidad</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reporte in reportes %}
+                    {# tr es igual a fila y td es cada columna #}
+                    <tr>
+                        <td>{{ reporte.0 }}</td>
+                        <td>{{ reporte.1 }}</td>
+                        <td>{{ reporte.2 }}</td>
+                        <td>{{ reporte.3 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-10">
+        <a href="/">Regresar</a>
+    </div>
+
+</div>
+
+{# Recorremos cada mensaje si hay  #}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <p>{{ message }}</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
+{% endblock %}

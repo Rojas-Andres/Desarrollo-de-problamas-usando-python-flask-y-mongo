@@ -108,9 +108,7 @@ def add_productos():
         #Establecemos un cursor para la conexion a la bd
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO productos (codigo_producto ,categoria,nombre ,precio,cantidad_bodega,estado) values (%s,%s,%s,%s,%s,%s)", (codigo,categoria,nombre,precio,cantidad,estado))
-        #cur.execute("Select * from contacts")
         mysql.connection.commit()
-        #Flash permite enviar mensajes entre vistas
         flash("Producto ha sido agregado satisfactoriamente")
         #Redireccionamos a la principal
         return redirect(url_for('productos'))
@@ -139,7 +137,6 @@ def actualizar_producto(producto):
     flash("El producto fue actualizado satisfactoriamente")
     return redirect(url_for('productos')) 
 
-
 #Le envio el producto 
 @app.route('/delete_producto/<int:producto>')
 def delete_producto(producto):
@@ -149,6 +146,80 @@ def delete_producto(producto):
     flash("Producto borrado satisfactoriamente")
     return redirect(url_for('productos'))
 
+#Facturas
+
+@app.route('/facturas')
+def facturas():
+    #Realizamos la consulta a la base de datos para enviar las facturas
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM FACTURAS')
+    data = cur.fetchall()
+    #Le envio los clientes al index para que los muestre 
+    return render_template('facturas.html',facturas = data )
+
+
+@app.route('/add_facturas',methods=['POST'])
+def add_facturas():
+    if request.method == 'POST':
+        #Nos referimos al name del formulario del index
+        codigo = request.form["Codigo"]
+        cedula = request.form["Cedula"]
+        producto = request.form["Producto"]
+        cantidad = request.form["Cantidad"]
+        fecha = request.form["Fecha"]
+        metodo = request.form["Metodo"]
+        #Establecemos un cursor para la conexion a la bd
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO FACTURAS (codigo_factura  ,cedula_cliente ,producto  ,cantidad_prod ,fecha_compra ,metodo_pago ) values (%s,%s,%s,%s,%s,%s)", (codigo,cedula,producto,cantidad,fecha,metodo))
+        mysql.connection.commit()
+        flash("Producto ha sido agregado satisfactoriamente")
+        #Redireccionamos a la principal
+        return redirect(url_for('facturas'))
+
+@app.route('/edit_facturas/<int:factura>')
+def get_facturas(factura):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM FACTURAS WHERE codigo_factura = {0} ".format(factura))
+    dato = cur.fetchall()
+    return render_template('editar_factura.html',factura = dato[0] )
+
+@app.route('/actualizar_facturas/<int:factura>',methods=['POST'])
+def actualizar_facturas(factura):
+    cur = mysql.connection.cursor()
+    codigo = request.form["Codigo"]
+    cedula = request.form["Cedula"]
+    producto = request.form["Producto"]
+    cantidad = request.form["Cantidad"]
+    fecha = request.form["Fecha"]
+    metodo = request.form["Metodo"]
+    cur.execute("""
+    UPDATE FACTURAS SET codigo_factura = %s ,cedula_cliente =%s,producto =%s,cantidad_prod =%s,fecha_compra=%s ,metodo_pago=%s
+    where codigo_factura=%s
+     """,(codigo,cedula,producto,cantidad,fecha,metodo,factura))
+    mysql.connection.commit()
+    flash("La factura fue actualizado satisfactoriamente")
+    return redirect(url_for('facturas')) 
+
+#Le envio la factura 
+@app.route('/delete_facturas/<int:factura>')
+def delete_factura(factura):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM FACTURAS WHERE codigo_factura = {0} ".format(factura))
+    mysql.connection.commit()
+    flash("La factura borrado satisfactoriamente")
+    return redirect(url_for('facturas'))
+
+#Reporte clientes , facturas y producto
+@app.route('/reporte')
+def reporte():
+    cur = mysql.connection.cursor()
+    cur.execute("""  
+    select a.nombre,b.nombre ,b.precio*c.cantidad_prod,c.metodo_pago from 
+    clientes a ,productos b ,facturas c 
+    where a.cedula=c.cedula_cliente and b.codigo_producto=c.producto 
+    order by 3""")
+    data = cur.fetchall()
+    return render_template('reporte.html',reportes = data )
 #El debug significa que cada vez que hagamos un cambio se reinicie el server
 if __name__== '__main__': 
     app.run(port = 3000 ,debug = True)

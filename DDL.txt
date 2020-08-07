@@ -10,8 +10,27 @@ foto varchar(12) not null )
 
 -- Creacion de la tabla producto
 
-create table productos(codigo_producto numeric(12) primary key not null ,categoria varchar(30),nombre varchar(30), precio numeric(12),cantidad_bodega numeric(12) , estado varchar(15), CHECK (estado in ('INACTIVO' | 'ACTIVO')))
+create table productos(
+codigo_producto numeric(12) primary key not null 
+,categoria varchar(30)
+,nombre varchar(30)
+, precio numeric(12)
+,cantidad_bodega numeric(12)
+, estado varchar(15)
+, CHECK (estado in ('INACTIVO' | 'ACTIVO')))
 
 --Insert de prueba
 
 insert into productos (codigo_producto ,categoria,nombre ,precio,cantidad_bodega,estado) values (1,'A','Paracetamol',1200,12,'ACTIVO')
+
+--- Creacion de la tabla facturas
+
+create table facturas ( codigo_factura numeric(12) primary key not null, 
+cedula_cliente numeric(12),
+producto numeric(12) not null,
+cantidad_prod numeric(12) not null,
+fecha_compra varchar(12) not null,
+metodo_pago varchar(12) not null,
+constraint fk_cedula_cliente FOREIGN KEY (cedula_cliente) REFERENCES clientes(cedula),
+constraint fk_producto  FOREIGN KEY (producto) REFERENCES productos (codigo_producto)
+)
