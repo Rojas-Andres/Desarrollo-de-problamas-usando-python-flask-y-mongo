@@ -1,0 +1,18 @@
+{
+	"_id":"",
+	"productos":[{
+		"nombre_producto":"",
+		"codigo_proveedor":"",
+		"codigo_producto":""
+	},
+	{
+		"nombre_producto":"",
+		"codigo_proveedor":"",
+		"codigo_producto":""
+	}
+	],
+	"tienda":{
+		"codigo_tienda":"",
+		"nombre_tienda":""
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"_id":"",
+	"venta":[
+		{
+			"codigo_producto1":"",
+			"cantidad":"",
+			"devuelto":"",
+			"precio":""
+		},
+		{
+			"codigo_producto2":"",
+			"cantidad":"",
+			"devuelto":"",
+			"precio":""
+		}
+	],
+	"codigo_tienda":"",
+	"fecha":"",
+	"codigo_cliente":"",
+	"codigo_vendedor":""
+}

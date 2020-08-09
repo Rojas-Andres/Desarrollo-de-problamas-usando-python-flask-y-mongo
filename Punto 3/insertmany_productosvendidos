@@ -1,0 +1,23 @@
+db.productos_vendidos.insertMany([
+{venta:[{codigo_producto:1,cantidad:10,devuelto:"N",precio:1000},{codigo_producto:2,cantidad:15,devuelto:"N",precio:2000}],codigo_tienda:1,fecha:new Date("2020-04-12"),codigo_cliente:1,codigo_vendedor:1},
+{venta:[{codigo_producto:1,cantidad:100,devuelto:"N",precio:4999},{codigo_producto:2,cantidad:150,devuelto:"S",precio:10400}],codigo_tienda:2,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1},{venta:[{codigo_producto:2,cantidad:90,devuelto:"N",precio:4199},{codigo_producto:1,cantidad:140,devuelto:"S",precio:1000}],codigo_tienda:1,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1},
+{venta:[{codigo_producto:1,cantidad:1000,devuelto:"N",precio:599},{codigo_producto:2,cantidad:150,devuelto:"S",precio:10400}],codigo_tienda:2,fecha:new Date("2020-06-30"),codigo_cliente:2,codigo_vendedor:1},{venta:[{codigo_producto:2,cantidad:90,devuelto:"N",precio:4199},{codigo_producto:1,cantidad:140,devuelto:"S",precio:1000}],codigo_tienda:1,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1}
+])
+db.productos_vendidos.insertOne({venta:[{codigo_producto:1,cantidad:100,devuelto:"N",precio:4999},{codigo_producto:2,cantidad:150,devuelto:"S",precio:10400}],codigo_tienda:2,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1},{venta:[{codigo_producto:2,cantidad:90,devuelto:"N",precio:4199},{codigo_producto:1,cantidad:140,devuelto:"S",precio:1000}],codigo_tienda:1,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1}
+)
+db.productos_vendidos.insertOne({venta:[{codigo_producto:1,cantidad:100,devuelto:"N",precio:4999},{codigo_producto:2,cantidad:150,devuelto:"S",precio:10400}],codigo_tienda:2,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1},{venta:[{codigo_producto:2,cantidad:90,devuelto:"N",precio:4199},{codigo_producto:1,cantidad:140,devuelto:"S",precio:1000}],codigo_tienda:1,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1}
+)
+db.productos_vendidos.insertOne({venta:[{codigo_producto:1,cantidad:100,devuelto:"N",precio:4999},{codigo_producto:2,cantidad:150,devuelto:"S",precio:10400}],codigo_tienda:2,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1},{venta:[{codigo_producto:2,cantidad:90,devuelto:"N",precio:4199},{codigo_producto:1,cantidad:140,devuelto:"S",precio:1000}],codigo_tienda:1,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1}
+)
+db.productos_vendidos.insertOne({venta:[{codigo_producto:1,cantidad:1000,devuelto:"N",precio:599},{codigo_producto:2,cantidad:150,devuelto:"S",precio:10400}],codigo_tienda:2,fecha:new Date("2020-06-30"),codigo_cliente:2,codigo_vendedor:1},{venta:[{codigo_producto:2,cantidad:90,devuelto:"N",precio:4199},{codigo_producto:1,cantidad:140,devuelto:"S",precio:1000}],codigo_tienda:1,fecha:new Date("2020-05-30"),codigo_cliente:2,codigo_vendedor:1})
+
+db.productos_vendidos.insertOne({venta:[{codigo_producto:1,cantidad:100,devuelto:"N",precio:700},{codigo_producto:2,cantidad:10,devuelto:"S",precio:1100}],codigo_tienda:2,fecha:new Date("2020-07-12"),codigo_cliente:2,codigo_vendedor:1})
+db.productos_vendidos.insertOne({venta:[{codigo_producto:2,cantidad:10,devuelto:"N",precio:5000},{codigo_producto:1,cantidad:14,devuelto:"S",precio:900}],codigo_tienda:1,fecha:new Date("2020-05-12"),codigo_cliente:2,codigo_vendedor:1})
+
+db.productos_vendidos.insertOne({venta:[{codigo_producto:1,cantidad:1500,devuelto:"N",precio:750},{codigo_producto:2,cantidad:15,devuelto:"S",precio:1200}],codigo_tienda:2,fecha:new Date("2020-07-15"),codigo_cliente:2,codigo_vendedor:1})
+db.productos_vendidos.insertOne({venta:[{codigo_producto:2,cantidad:5,devuelto:"N",precio:4500},{codigo_producto:1,cantidad:12,devuelto:"S",precio:100}],codigo_tienda:1,fecha:new Date("2020-05-11"),codigo_cliente:2,codigo_vendedor:1})
+
+db.productos_vendidos.insertOne({venta:[{codigo_producto:2,cantidad:5,devuelto:"N",precio:4500},{codigo_producto:1,cantidad:12,devuelto:"S",precio:100}],codigo_tienda:1,fecha:new Date("2020-05-11"),codigo_cliente:2,codigo_vendedor:1})
+
+db.productos_vendidos.insertOne({venta:[{codigo_producto:2,cantidad:5,devuelto:"N",precio:4500},{codigo_producto:1,cantidad:12,devuelto:"S",precio:100}],codigo_tienda:1,fecha:new Date("2020-05-11"),codigo_cliente:2,codigo_vendedor:2})
+

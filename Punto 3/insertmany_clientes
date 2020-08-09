@@ -1,0 +1,4 @@
+db.clientes.insertMany([
+{cliente:1,"cedula":100129481,ciudad:"Cali",nombre:"Alba Mery"},
+{cliente:2,"cedula":4131313,ciudad:"Bogota",nombre:"John Insuasti"},
+] )

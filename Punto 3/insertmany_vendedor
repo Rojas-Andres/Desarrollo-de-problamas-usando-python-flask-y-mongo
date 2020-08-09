@@ -1,0 +1,4 @@
+db.vendedor.insertMany([
+{vendedor:1,"cedula":1923491,ciudad:"Cali",nombre:"Andres Rojas"},
+{vendedor:2,"cedula":912941,ciudad:"Barranquilla",nombre:"Felipe Londoño"},
+] )

@@ -1,0 +1,23 @@
+db.vendedor.aggregate([
+   {"$lookup":{
+     "from":"productos_vendidos",
+     "localField":"vendedor",
+     "foreignField":"codigo_vendedor",
+     "as":"vende"
+   }},
+   {"$unwind":"$vende"},
+   {"$lookup":{
+     "from":"clientes",
+     "localField":"vende.codigo_cliente",
+     "foreignField":"cliente",
+     "as":"cliente"
+   }},
+   {"$unwind":"$cliente"},
+   {"$unwind":"$vende.venta"},
+   {$group:{_id:{c_vendedor:"$vende.codigo_vendedor",n_vendedor:"$nombre",c_cliente:"$cliente.cedula",n_cliente:"$cliente.nombre",año:{$year:"$vende.fecha"},mes:{$month:"$vende.fecha"},c_producto:"$vende.venta.codigo_producto",precio:"$vende.venta.precio"},cantidad_productos:{$sum:"$vende.venta.cantidad"},total_ventas: {$sum:{ $multiply: [ "$vende.venta.cantidad", "$vende.venta.precio" ]}}}}
+]).pretty()
+
+Para este tipo de agregacion se baso en la coleccion de vendedor y luego se le hizo la conexion a la conexion de productos_vendidos y se le le realizo el unwind al
+alias dado , posteriormente se realizo la conexion a clientes con el campo de vende.codigo_cliente que fue al que se le realizo el unwind anterior y luego
+se realiza dos unwind mas para sacar los datos pertinente para el group , se realizo tanto para el cliente como para la venta ya que necesitabamos saber la factura
+para luego sumarla , en el group se muestra los datos solicitados y se realizo la suma de la venta total.

@@ -1,0 +1,26 @@
+db.productos_vendidos.aggregate([
+   {"$unwind":"$venta"},
+   {"$lookup":{
+     "from":"productoss",
+     "let":{"res_cod_it":"$venta.codigo_producto"},
+     "pipeline":[
+       {"$unwind":"$productos"},
+       {"$match":{"$expr":{"$eq":["$$res_cod_it","$productos.codigo_producto"]}}}
+     ],
+     "as":"producto"
+   }},
+   {"$unwind":"$producto"},
+   
+   {$group:{_id:{year:{$year:"$fecha"},mes:{$month:"$fecha"},cliente:"$codigo_cliente",tienda:"$codigo_tienda",codigo_producto:"$venta.codigo_producto",nombre_producto:"$producto.productos.nombre_producto",precio_producto:"producto.productos.precio",codigo_vendedor:"$codigo_vendedor"},total: {$sum:{ $multiply: [ "$venta.cantidad", "$venta.precio" ]}},total_cantidad:{$sum:"$venta.cantidad"}}}
+]).pretty()
+
+Principalmente se basamos en la coleccion de productos_vendidos ya que esta contiene toda la informacion de las ventas,
+se realizo como primer paso el unwind para que dividiera la lista y se pueda hacer mas manejable esto lo que hace principalmente es "crear" un nuevo documento en donde
+se divide cada indice de la lista, posteriormente se realizo el lookup que es para establecer una conexion a otra coleccion , el from indica cual coleccion se le va a
+hacer la conexion , el let lo que significa es como crear una variable local en donde posteriormente sera entrelazada con una llave de la otra colecccion en este caso
+le indicamos asignele a res_cod_it el codigo del producto , posteriormente se realizo otro unwind pero a la coleccion a la cual le hacemos la conexion ya que la llave
+productos contiene adentro una lista de diccionarios con este paso le indicamos que divida cada indice en un nuevo "documento" , se realizo con el fin de luego hacer
+la respectiva relacion , despues se le hizo la coincidencia donde res_cod_it sea igual a el codigo del producto de la coleccion a la cual se le desarrollo la conexion,
+luego le indicamos un alias que seria producto pero como producto es una lista se hacemos el unwind para dividir cada uno y poder sacar los valores necesitados
+del diccionario, luego se agruparon los valores solicitados y tambien por el precio ya que si multiplicamos eso y lo sumamos si algun precio varia para el mismo 
+producto esto generara inconsistencias y se realizo una suma del total que seria la multiplicacion de la cantidad de productos por el precio,

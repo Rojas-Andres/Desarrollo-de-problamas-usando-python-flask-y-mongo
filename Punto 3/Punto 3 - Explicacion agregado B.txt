@@ -1,0 +1,19 @@
+db.productoss.aggregate([
+   {"$lookup":{
+     "from":"productos_vendidos",
+     "localField":"tienda.codigo_tienda",
+     "foreignField":"codigo_tienda",
+     "as":"ventas"
+   }},
+   {"$unwind":"$ventas"},
+   {"$unwind":"$ventas.venta"},
+   {$group:{_id:{año:{$year:"$ventas.fecha"},mes:{$month:"$ventas.fecha"},codigo_cliente:"$ventas.codigo_cliente",codigo_tienda:"$tienda.codigo_tienda",nombre_tienda:"$tienda.nombre_tienda",devuelto:"$ventas.venta.devuelto",codigo_producto:"$ventas.venta.codigo_producto", precio_producto:"$ventas.venta.precio"},cantidad:{$sum:1},total: {$sum:{ $multiply: [ "$ventas.venta.cantidad", "$ventas.venta.precio" ]}},cantidad_productos:{$sum:"$ventas.venta.cantidad"}}}
+ ]).pretty()
+
+
+Se baso principalmente en la coleccion de productoss ya que esta la tomariamos como principal para mostrar la tienda y el codigo de la tienda , luego de tener esto como
+premisa comenzamos con el lookup que es para enaltecer la conexion con otra coleccion el from significa la coleccion el localfield significa cual es el valor que vamos
+a comparar con la otra coleccion y el foreignField significa el campo con el que le hacemos la conexion de la otra coleccion y se le pone un alias como ventas,
+posteriormente se le hace el undwind ya que todo esta en una lista y se procede a hacerle el unwind a ventas.venta para que podamos ver el producto que fue vendido,
+la cantidad etc ..., luego se le hace group con los campos mencionados en el apartado b y se le suma , en el group contenemos que el precio sea igual ya que 
+algunas veces para un mismo producto vario el precio en esa compra en especifico.

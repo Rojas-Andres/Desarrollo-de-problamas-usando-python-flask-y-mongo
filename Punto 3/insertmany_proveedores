@@ -1,0 +1,4 @@
+db.proveedores.insertMany([
+{proveedor:1,"nombre_proveedor":"proveedor1",ciudad:"Cali"},
+{proveedor:2,"nombre_proveedor":"proveedor2",ciudad:"Bogota"}
+] )

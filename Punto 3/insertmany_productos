@@ -1,0 +1,4 @@
+db.productoss.insertMany([
+	{productos: [{nombre_producto:"kelloggs",codigo_proveedor:1,codigo_producto:1},{nombre_producto:"chocolatina",codigo_proveedor:2,codigo_producto:2}],tienda:{codigo_tienda:1,nombre_tienda:"tienda1"}},
+   { productos: [{nombre_producto:"bombon",codigo_proveedor:2,codigo_producto:1},{nombre_producto:"nucita",codigo_proveedor:1,codigo_producto:2}],tienda:{codigo_tienda:2,nombre_tienda:"tienda2"}}
+] )
