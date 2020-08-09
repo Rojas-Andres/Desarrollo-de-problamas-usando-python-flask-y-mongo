@@ -146,7 +146,7 @@ def inactivar(producto):
     mysql.connection.commit()
     flash("Producto ha sido inhabilitado satisfactoriamente")
     return redirect(url_for('productos'))
-@app.route('/delete_producto/<int:factura>')
+@app.route('/delete_producto/<int:producto>')
 def delete_producto(producto):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM PRODUCTOS WHERE codigo_producto = {0} ".format(producto))
