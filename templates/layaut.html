@@ -1,36 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="Es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='assets/images/favicon.png') }} "> 
+    
     <title>Clientes Flask App</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Flask App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" href="/">Inicio <span class="sr-only">(current)</span></a>
-            <a class="nav-link" href="/contactos">Clientes</a>
-            <a class="nav-link" href="/productos">Productos</a>
-            <a class="nav-link" href="/facturas">Facturas</a>
-            <a class="nav-link" href="/reporte">Reporte</a>
-          </div>
-        </div>
-    </nav>
-    <!-- En contenido que va aqui puede ser el de editar_contacto o index , pt-4 = padding-top = 4 -->
-    <div class="container pt-4">    
-        {% block body %}
-        {% endblock %}
-    </div>
+   <!-- Custom CSS -->
+   <link href="{{ url_for('static', filename='assets/libs/flot/css/float-chart.css') }}" rel="stylesheet">
+   
+   <!-- Custom CSS -->
+   <link type="text/css" href="{{ url_for('static', filename='dist/css/style.min.css') }}" rel="stylesheet">
+   
+   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+   <!--[if lt IE 9]>
+   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 
-    <!--Scrips de bootstrap-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-</body>
+  </head>
+<body>
+  <div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper">
+  <header class="topbar" data-navbarbg="skin5">
+      <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+          <div class="navbar-header" data-logobg="skin5">
+              <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+              <a class="navbar-brand" href="/">
+                  <b class="logo-icon p-l-10">
+                      <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt="homepage" class="light-logo" />                 
+                    </b>
+                  <span class="logo-text">
+                       <img src="{{ url_for('static', filename='assets/images/logo-text.png') }}" alt="homepage" class="light-logo" />                    
+                  </span>
+              </a>
+              <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+          </div>
+          <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+              <ul class="navbar-nav float-left mr-auto">
+                  <li class="nav-item d-none d-md-block">
+                    <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
+                  </li>
+              </ul>
+              <ul class="navbar-nav float-right">
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ url_for('static', filename='assets/images/users/1.jpg') }}" alt="user" class="rounded-circle" width="31"></a>
+                      <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+  </header>
+
+  <aside class="left-sidebar" data-sidebarbg="skin5">
+      <!-- Sidebar scroll-->
+      <div class="scroll-sidebar">
+          <!-- Sidebar navigation-->
+          <nav class="sidebar-nav">
+              <ul id="sidebarnav" class="p-t-30">
+                  <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/contactos" aria-expanded="false"><i class="mdi mdi-view-dashboard">
+                    </i><span class="hide-menu">Clientes</span></a></li>
+                  <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/productos" aria-expanded="false"><i class="mdi mdi-chart-bar">
+                  </i><span class="hide-menu">Productos</span></a></li>
+                  <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/facturas" aria-expanded="false"><i class="mdi mdi-chart-bubble">
+                  </i><span class="hide-menu">Facturas</span></a></li>
+                  <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/reporte" aria-expanded="false"><i class="mdi mdi-border-inside">
+                  </i><span class="hide-menu">Reporte</span></a></li>
+              </ul>
+          </nav>
+      </div>
+  </aside>
+  <div class="page-wrapper">
+ 
+       <div class="page-breadcrumb">
+          <div class="row">
+              <div class="col-12 d-flex no-block align-items-center">
+                  <h4 class="page-title">Dashboard</h4>
+                  <div class="ml-auto text-right">
+                      <nav aria-label="breadcrumb">
+                          <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="#">Home</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">Library</li>
+                          </ol>
+                      </nav>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="container-fluid">
+          <div class="row">
+
+              <div class="col-lg-12">
+                  <!-- accoridan part -->
+                  <div class="accordion" id="accordionExample">
+                      <div class="card m-b-0">
+                          <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                              <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  <i class="m-r-5 fa fa-magnet" aria-hidden="true"></i>
+                                  <span>Accordion Example 1</span>
+                              </a>
+                            </h5>
+                          </div>
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                              {% block body %}
+                              {% endblock %}
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <footer class="footer text-center">
+          Administrador Agosto 2020 </a>.
+      </footer>
+  </div>
+</div>
+
+    <!-- En contenido que va aqui puede ser el de editar_contacto o index , pt-4 = padding-top = 4 -->
+    <script src="{{ url_for('static', filename='assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{ url_for('static', filename='assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/extra-libs/sparkline/sparkline.js') }}"></script>
+    <!--Wave Effects -->
+    <script src="{{ url_for('static', filename='dist/js/waves.js') }}"></script>
+    <!--Menu sidebar -->
+    <script src="{{ url_for('static', filename='dist/js/sidebarmenu.js') }}"></script>
+    <!--Custom JavaScript -->
+    <script src="{{ url_for('static', filename='dist/js/custom.min.js') }}"></script>
+    <!--This page JavaScript -->
+    <!-- <script src="../../dist/js/pages/dashboards/dashboard1.js"></script> -->
+    <!-- Charts js Files -->
+    <script src="{{ url_for('static', filename='assets/libs/flot/excanvas.js') }}"></script>   
+    <script src="{{ url_for('static', filename='assets/libs/flot/jquery.flot.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/flot/jquery.flot.pie.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/flot/jquery.flot.time.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/flot/jquery.flot.stack.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/flot/jquery.flot.crosshair.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/pages/chart/chart-page-init.js') }}"></script>
+  </body>
 </html>
