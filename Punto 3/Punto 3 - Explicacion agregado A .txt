@@ -23,4 +23,8 @@ productos contiene adentro una lista de diccionarios con este paso le indicamos 
 la respectiva relacion , despues se le hizo la coincidencia donde res_cod_it sea igual a el codigo del producto de la coleccion a la cual se le desarrollo la conexion,
 luego le indicamos un alias que seria producto pero como producto es una lista se hacemos el unwind para dividir cada uno y poder sacar los valores necesitados
 del diccionario, luego se agruparon los valores solicitados y tambien por el precio ya que si multiplicamos eso y lo sumamos si algun precio varia para el mismo 
-producto esto generara inconsistencias y se realizo una suma del total que seria la multiplicacion de la cantidad de productos por el precio,
+producto esto generara inconsistencias y se realizo una suma del total que seria la multiplicacion de la cantidad de productos por el precio.
+
+Diagrama paso a paso :
+
+https://drive.google.com/file/d/1uuO0e-aohbw1B2AAWO9DUzaNR2YQkU5m/view?usp=sharing
