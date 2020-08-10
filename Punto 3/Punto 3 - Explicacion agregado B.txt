@@ -17,3 +17,6 @@ a comparar con la otra coleccion y el foreignField significa el campo con el que
 posteriormente se le hace el undwind ya que todo esta en una lista y se procede a hacerle el unwind a ventas.venta para que podamos ver el producto que fue vendido,
 la cantidad etc ..., luego se le hace group con los campos mencionados en el apartado b y se le suma , en el group contenemos que el precio sea igual ya que 
 algunas veces para un mismo producto vario el precio en esa compra en especifico.
+
+Diagrama draw.io
+https://drive.google.com/file/d/1uuPLxwqu-wFzOEWm02Aqfesmh4QWChtW/view?usp=sharing
