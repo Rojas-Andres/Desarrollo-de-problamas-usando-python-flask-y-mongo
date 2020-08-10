@@ -21,3 +21,7 @@ Para este tipo de agregacion se baso en la coleccion de vendedor y luego se le h
 alias dado , posteriormente se realizo la conexion a clientes con el campo de vende.codigo_cliente que fue al que se le realizo el unwind anterior y luego
 se realiza dos unwind mas para sacar los datos pertinente para el group , se realizo tanto para el cliente como para la venta ya que necesitabamos saber la factura
 para luego sumarla , en el group se muestra los datos solicitados y se realizo la suma de la venta total.
+
+
+Diagrama en draw.io
+https://drive.google.com/file/d/1SEDciiD2_MVGdmEaBkQQ7mVTr0txThY5/view?usp=sharing

@@ -14,7 +14,7 @@ db.productos_vendidos.aggregate([
    {$group:{_id:{year:{$year:"$fecha"},mes:{$month:"$fecha"},cliente:"$codigo_cliente",tienda:"$codigo_tienda",codigo_producto:"$venta.codigo_producto",nombre_producto:"$producto.productos.nombre_producto",precio_producto:"producto.productos.precio",codigo_vendedor:"$codigo_vendedor"},total: {$sum:{ $multiply: [ "$venta.cantidad", "$venta.precio" ]}},total_cantidad:{$sum:"$venta.cantidad"}}}
 ]).pretty()
 
-Principalmente se basamos en la coleccion de productos_vendidos ya que esta contiene toda la informacion de las ventas,
+Principalmente se baso en la coleccion de productos_vendidos ya que esta contiene toda la informacion de las ventas,
 se realizo como primer paso el unwind para que dividiera la lista y se pueda hacer mas manejable esto lo que hace principalmente es "crear" un nuevo documento en donde
 se divide cada indice de la lista, posteriormente se realizo el lookup que es para establecer una conexion a otra coleccion , el from indica cual coleccion se le va a
 hacer la conexion , el let lo que significa es como crear una variable local en donde posteriormente sera entrelazada con una llave de la otra colecccion en este caso
